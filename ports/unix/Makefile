@@ -100,7 +100,9 @@ else
 # Use gcc syntax for map file
 LDFLAGS_ARCH = -Wl,-Map=$@.map,--cref -Wl,--gc-sections
 endif
-LDFLAGS += $(LDFLAGS_MOD) $(LDFLAGS_ARCH) -lm $(LDFLAGS_EXTRA) -lSDL2
+#dgo edit removed SDL
+#LDFLAGS += $(LDFLAGS_MOD) $(LDFLAGS_ARCH) -lm $(LDFLAGS_EXTRA) -lSDL2
+LDFLAGS += $(LDFLAGS_MOD) $(LDFLAGS_ARCH) -lm $(LDFLAGS_EXTRA)
 
 # Flags to link with pthread library
 LIBPTHREAD = -lpthread
@@ -203,20 +205,27 @@ SRC_C = \
 	$(SRC_MOD) \
 	$(wildcard $(VARIANT_DIR)/*.c)
 
+#dgo edit removed SDL
+#LIB_SRC_C += $(addprefix lib/,
+#    lv_bindings/driver/SDL/SDL_monitor.c
+#    lv_bindings/driver/SDL/SDL_mouse.c
+#	lv_bindings/driver/SDL/modSDL.c
+#	$(LIB_SRC_C_EXTRA)
+#	timeutils/timeutils.c
+#	utils/gchelper_generic.c
+#	)
 LIB_SRC_C += $(addprefix lib/,\
-    lv_bindings/driver/SDL/SDL_monitor.c \
-    lv_bindings/driver/SDL/SDL_mouse.c \
-	lv_bindings/driver/SDL/modSDL.c \
+	lv_bindings/driver/linux/modfb.c \
 	$(LIB_SRC_C_EXTRA) \
 	timeutils/timeutils.c \
 	utils/gchelper_generic.c \
 	)
-
-ifneq ($(UNAME_S),Darwin)
-LIB_SRC_C += $(addprefix lib/,\
-	lv_bindings/driver/linux/modfb.c \
-	)
-endif
+#moved modfb.c to above
+#ifneq ($(UNAME_S),Darwin)
+#LIB_SRC_C += $(addprefix lib/,
+#	lv_bindings/driver/linux/modfb.c
+#	)
+#endif
 
 OBJ = $(PY_O)
 OBJ += $(addprefix $(BUILD)/, $(SRC_C:.c=.o))

@@ -141,12 +141,12 @@
 #endif
 
 #define MICROPY_PY_LVGL             (1)
-#define MICROPY_PY_LVGL_SDL         (1)
+#define MICROPY_PY_LVGL_SDL         (0)     //dgo edited to 0
 #define MICROPY_PY_LVGL_LODEPNG     (1)
 #if LINUX_FRAME_BUFFER
     #define MICROPY_PY_LVGL_FB      (1)
 #else
-    #define MICROPY_PY_LVGL_FB      (0)
+    #define MICROPY_PY_LVGL_FB      (1)     //dgo edited to 1
 #endif
 
 #define MICROPY_PY_OS_STATVFS       (1)
